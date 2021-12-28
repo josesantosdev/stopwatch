@@ -18,6 +18,7 @@ doZero();
 
 start.addEventListener('click', () => {
     if (!intervalo) {
+        start.innerHTML = "STOP"
         intervalo = setInterval(() => {
             mseg++;
             if (mseg == 100) {
@@ -26,6 +27,7 @@ start.addEventListener('click', () => {
                 if (seg == 60) {
                     seg = 0;
                     mim++;
+
                 }
             }
 
@@ -34,6 +36,10 @@ start.addEventListener('click', () => {
             mSegundos.innerHTML = mseg
 
         }, (10))
+    } else {
+        start.innerHTML = "START"
+        clearInterval(intervalo)
+        intervalo = null
     }
 })
 
@@ -47,5 +53,6 @@ reset.addEventListener('click', () => {
     minutos.innerHTML = mim + "m "
     segundos.innerHTML = seg + "s "
     mSegundos.innerHTML = mseg
+    start.innerHTML = "START"
 
 })
