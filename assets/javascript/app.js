@@ -14,11 +14,27 @@ function doZero() {
     mSegundos.innerHTML = mseg
 }
 
+function buttonChange(valor) {
+    if (!intervalo) {
+        start.innerHTML = " STOP "
+    } else {
+        intervalo = null
+        start.innerHTML = "START"
+
+    }
+}
+
+function resetClock() {
+    mim = 0
+    seg = 0
+    mseg = 0
+}
+
 doZero();
 
 start.addEventListener('click', () => {
     if (!intervalo) {
-        start.innerHTML = "STOP"
+        buttonChange()
         intervalo = setInterval(() => {
             mseg++;
             if (mseg == 100) {
@@ -31,28 +47,24 @@ start.addEventListener('click', () => {
                 }
             }
 
-            minutos.innerHTML = mim + "m "
-            segundos.innerHTML = seg + "s "
-            mSegundos.innerHTML = mseg
+            doZero()
 
         }, (10))
+
     } else {
-        start.innerHTML = "START"
         clearInterval(intervalo)
-        intervalo = null
+        buttonChange()
     }
 })
 
 reset.addEventListener('click', () => {
     clearInterval(intervalo)
-    mim = 0
-    seg = 0
-    mseg = 0
-    intervalo = null
+    resetClock()
+    doZero()
+    if (intervalo) {
+        buttonChange()
+    }
 
-    minutos.innerHTML = mim + "m "
-    segundos.innerHTML = seg + "s "
-    mSegundos.innerHTML = mseg
-    start.innerHTML = "START"
+
 
 })
