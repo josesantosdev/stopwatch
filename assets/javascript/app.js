@@ -1,68 +1,128 @@
-let minutos = document.getElementById('minutos')
-let segundos = document.getElementById('segundos')
-let mSegundos = document.getElementById('mSegundos')
-let start = document.getElementById('start')
-let reset = document.getElementById('reset')
+const minute = document.getElementById('minute')
+const second = document.getElementById('second')
+const mSecond = document.getElementById('mSecond')
+const start = document.getElementById('start')
+const reset = document.getElementById('reset')
+
 let mim = 0
 let seg = 0
-let mseg = 0
-let intervalo
+let ms = 0
+let interval
+let section = true
 
-function doZero() {
-    minutos.innerHTML = mim + "m "
-    segundos.innerHTML = seg + "s "
-    mSegundos.innerHTML = mseg
+function neo() {
+
+    if (section) {
+
+        section = false
+
+    } else {
+
+        section = true
+
+    }
+}
+
+
+function resetClock() {
+
+    if (section) {
+
+        mim = 0
+        seg = 0
+        ms = 0
+
+        neo()
+
+        if (!section) {
+
+            minute.innerHTML = mim + "m "
+            second.innerHTML = seg + "s "
+            mSecond.innerHTML = ms
+
+        }
+
+    } else {
+
+        minute.innerHTML = mim + "m "
+        second.innerHTML = seg + "s "
+        mSecond.innerHTML = ms
+
+    }
 }
 
 function buttonChange(valor) {
-    if (!intervalo) {
-        start.innerHTML = " STOP "
+
+    if (!interval) {
+
+        start.innerHTML = "STOP"
+
     } else {
-        intervalo = null
+
+        interval = null
         start.innerHTML = "START"
 
     }
 }
 
-function resetClock() {
-    mim = 0
-    seg = 0
-    mseg = 0
-}
 
-doZero();
+
+resetClock()
+
+
 
 start.addEventListener('click', () => {
-    if (!intervalo) {
+
+    if (!interval) {
+
+        neo()
+
         buttonChange()
-        intervalo = setInterval(() => {
-            mseg++;
-            if (mseg == 100) {
-                mseg = 0;
+
+        interval = setInterval(() => {
+
+            ms++;
+
+            if (ms == 100) {
+
+                ms = 0;
                 seg++;
+
                 if (seg == 60) {
+
                     seg = 0;
                     mim++;
 
                 }
             }
 
-            doZero()
+            resetClock()
 
         }, (10))
 
     } else {
-        clearInterval(intervalo)
+
+        clearInterval(interval)
+
         buttonChange()
+
     }
 })
 
 reset.addEventListener('click', () => {
-    clearInterval(intervalo)
+
+    neo()
+
+    clearInterval(interval)
+
     resetClock()
-    doZero()
-    if (intervalo) {
+
+
+
+    if (interval) {
+
         buttonChange()
+
     }
 
 
